@@ -9,6 +9,33 @@
     <script src='main.js'></script>
 </head>
 <body>
-    
+    <div class="container">
+        <h2 id="form-title">Login</h2>
+        <form id="login-form">
+            <input type="text" id="login-username" 
+                placeholder="Usuário" required/>
+            
+            <input type="password" id="login-password"
+                placeholder="Senha" required />    
+
+            <button type="submit"> Entrar</button>    
+        </form>
+
+        <form id="register-form" style="display: none;">
+            <input type="text" id="register-username" 
+                placeholder="Nome do Usuário" required/>
+            
+            <input type="password" id="register-password"
+                placeholder="Nova senha" required/>
+
+            <button type="submit">Cadastrar</button>    
+        </form>
+
+        <p id="toggle-form">Não tem conta? 
+            <a id="toggle-link" href="#"> Criar conta </a></p>
+
+        <p id="message"> </p>
+    </div>
+    <script src='main.js'></script>
 </body>
 </html>
