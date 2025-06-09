@@ -1,0 +1,60 @@
+/* Estilo da seção de cadastro de livro */
+section {
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Título da seção */
+section h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+/* Campos de entrada de dados */
+#tituloLivro,
+#categoriaLivro {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botão de adicionar livro */
+button[onclick="adicionarLivro()"] {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[onclick="adicionarLivro()"]:hover {
+  background-color: #2980b9;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  section {
+    padding: 15px;
+  }
+
+  #tituloLivro,
+  #categoriaLivro,
+  button[onclick="adicionarLivro()"] {
+    font-size: 16px;
+  }
+}
+
