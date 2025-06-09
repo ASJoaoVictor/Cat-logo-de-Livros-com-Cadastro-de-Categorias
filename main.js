@@ -2,8 +2,7 @@ const users = [{"username": "victor", "password": "1234"}];
 
 const loginForm = document.getElementById("login-form");
 
-
-
+//Função verificar o login do usuário
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -12,7 +11,6 @@ loginForm.addEventListener("submit", (e) => {
     const message = document.getElementById("message");
 
     if(users.find(u => u.username == username && u.password == password)){
-        alert("Login feito")
         window.location.href = "cadastroLivro.html"
     }else{
         message.style.color = "red";
