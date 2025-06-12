@@ -59,7 +59,12 @@ section {
     color: #FFF;
 }
 
-.menu button:hover{
+.menu .desativo:hover{
     background-color: #FFF;
     color: #3949b1;
+}
+
+.menu .ativo:hover{
+    background-color: transparent;
+    color: #FFF;
 }

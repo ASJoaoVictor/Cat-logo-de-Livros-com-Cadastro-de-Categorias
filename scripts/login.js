@@ -11,7 +11,7 @@ loginForm.addEventListener("submit", (e) => {
     const message = document.getElementById("message");
 
     if(users.find(u => u.username == username && u.password == password)){
-        window.location.href = "cadastroLivro.html"
+        window.location.href = "cadastro.html"
     }else{
         message.style.color = "red";
         message.innerText = "Usuário ou senha incorretos!"
