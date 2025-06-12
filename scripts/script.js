@@ -1,4 +1,4 @@
-const users = [{"username": "victor", "password": "1234"}];
+const users = [{"username": "admin", "password": "1234"}];
 
 const loginForm = document.getElementById("login-form");
 
@@ -18,5 +18,6 @@ loginForm.addEventListener("submit", (e) => {
     }
 
     loginForm.reset();
-
 });
+
+

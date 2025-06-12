@@ -36,7 +36,7 @@ section {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    background-color: aqua;
+    background-color: #3949b1;
     height: 10vh;
     border-radius: 10px;
 }
@@ -45,10 +45,21 @@ section {
     height:8vh;
     width:15vw;
     border-radius: 5px;
-    background-color: white;
-    border: none;
+    border: 3px solid #ffffff;
+    font-size: 15px;
+}
+
+.ativo{
+    background-color: #FFF;
+    color: #3949b1;
+}
+
+.desativo{
+    background-color: transparent;
+    color: #FFF;
 }
 
 .menu button:hover{
-    background-color: #dfdfdf;
+    background-color: #FFF;
+    color: #3949b1;
 }
