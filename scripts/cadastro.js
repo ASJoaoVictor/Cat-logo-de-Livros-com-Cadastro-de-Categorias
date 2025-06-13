@@ -30,8 +30,6 @@ formCategoria.addEventListener("submit", (e) => {
 buttonCadastrarLivro.addEventListener("click", (e) => {
     e.preventDefault();
 
-    isButtonHigh = buttonCadastrarLivro.classList == "ativo"
-    buttonCadastrarLivro.classList = isButtonHigh ? "desativo" : "ativo";
 });
 
 buttonCadastrarCategoria.addEventListener("click", (e) => {
