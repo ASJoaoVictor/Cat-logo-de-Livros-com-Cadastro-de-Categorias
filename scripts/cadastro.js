@@ -12,6 +12,8 @@ const buttonListarCategorias = document.getElementById("button-listar-categorias
 const formCategoria = document.getElementById("form-categoria");
 const listaCategorias = document.getElementById("lista-categorias");
 
+const selectCategoriaLivro = document.getElementById("select-categoria-livro");
+
 formCategoria.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -29,6 +31,10 @@ formCategoria.addEventListener("submit", (e) => {
 
 buttonCadastrarLivro.addEventListener("click", (e) => {
     e.preventDefault();
+    selectCategoriaLivro.innerHTML = ""
+    for (let index = 0; index < categorias.length; index++) {
+        selectCategoriaLivro.innerHTML += "<option value="+categorias[index]+">"+categorias[index]+"</option>";
+    }
 
 });
 
