@@ -8,11 +8,13 @@ const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
 const buttonCadastrarCategoria = document.getElementById("button-cadastrar-categoria");
 const buttonListarCategorias = document.getElementById("button-listar-categorias")
 
-
+const formLivro = document.getElementById("form-livro");
 const formCategoria = document.getElementById("form-categoria");
 const listaCategorias = document.getElementById("lista-categorias");
 
 const selectCategoriaLivro = document.getElementById("select-categoria-livro");
+
+const divFormLivro = document.getElementById("div-form-livro");
 
 formCategoria.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -31,6 +33,14 @@ formCategoria.addEventListener("submit", (e) => {
 
 buttonCadastrarLivro.addEventListener("click", (e) => {
     e.preventDefault();
+
+    isButtonHigh = buttonCadastrarLivro.classList == "ativo"
+    buttonCadastrarLivro.classList = "ativo";
+    buttonCadastrarCategoria.classList =  "desativo";
+
+    formLivro.classList = "";
+    formCategoria.classList = "hidden";
+
     selectCategoriaLivro.innerHTML = ""
     for (let index = 0; index < categorias.length; index++) {
         selectCategoriaLivro.innerHTML += "<option value="+categorias[index]+">"+categorias[index]+"</option>";
@@ -38,11 +48,16 @@ buttonCadastrarLivro.addEventListener("click", (e) => {
 
 });
 
+
 buttonCadastrarCategoria.addEventListener("click", (e) => {
     e.preventDefault();
 
     isButtonHigh = buttonCadastrarCategoria.classList == "ativo"
-    buttonCadastrarCategoria.classList = isButtonHigh ? "desativo" : "ativo";
+    buttonCadastrarCategoria.classList = "ativo";
+    buttonCadastrarLivro.classList = "desativo";
+
+    formCategoria.classList = "";
+    formLivro.classList = "hidden";
 });
 
 buttonListarCategorias.addEventListener("click", () => {
@@ -53,3 +68,5 @@ buttonListarCategorias.addEventListener("click", () => {
     }
 
 });
+
+buttonCadastrarLivro.click();

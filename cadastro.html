@@ -13,9 +13,10 @@
       <button id="button-listar-livros" class="desativo">Listar livros</button>
       <button id="button-listar-categorias" class="desativo">Listar categorias</button>
     </div>
+
     <div class="forms">
-      <section>
-        <form action="">
+      <section id="div-form-livro">
+        <form action="" id="form-livro">
           <h2>Cadastro de Livro</h2>
           <input id="tituloLivro" placeholder="Título do Livro"><br>
           <select id="select-categoria-livro"></select><br>
@@ -25,7 +26,7 @@
 
         
       <section>
-        <form id="form-categoria">
+        <form id="form-categoria" class="hidden">
           <h2>Cadastro de Categoria</h2>
           <input id="nome-categoria" placeholder="Nome da Categoria"><br>
           <button type="submit">Adicionar Categoria</button>
@@ -33,15 +34,15 @@
       </section>
 
       
-      <section>
+      <section id="div-lista-livros" class="hidden">
         <h2>Lista de Livros</h2>
         <ul id="listaLivros"></ul>
       </section>
 
       
-      <section>
+      <section id="div-lista-categorias" class="hidden">
         <h2>Lista de Categorias</h2>
-        <div id="lista-categorias"></div>
+        <div id="lista-categorias">
       </section>
     </div>
 

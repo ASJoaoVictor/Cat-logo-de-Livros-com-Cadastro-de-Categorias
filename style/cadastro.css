@@ -35,10 +35,9 @@ input, select{
 }
 
 
-section {
+/*section {
     padding: 14px 20px;
     margin-bottom: 15px;
-    background-color: #06575770;
     color: #0c0c0c;
     text-decoration: none;
     display: block;
@@ -47,12 +46,16 @@ section {
     position: relative;
     padding-left: 60px;
     text-align: center;
-}
+}*/
 
-section form{
-    height: auto;
+div form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    background-color: #06575770;
     width: 50vw;
-    border: 3px solid #ffffff;
     border-radius: 15px;
     margin: auto;
     text-align: center;
@@ -98,7 +101,6 @@ section form{
     color: #000000;
 }
 
-.menu .ativo:hover{
-    background-color: transparent;
-    color: #FFF;
+.hidden {
+    display: none;
 }
