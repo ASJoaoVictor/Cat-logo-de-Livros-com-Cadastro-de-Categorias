@@ -48,13 +48,13 @@ input, select{
     text-align: center;
 }*/
 
-div form{
+section{
+    padding: 5%;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50vh;
     background-color: #06575770;
     border-radius: 15px;
     text-align: center;
