@@ -32,6 +32,26 @@ formCategoria.addEventListener("submit", (e) => {
 });
 
 
+formLivro.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const tituloLivro = document.getElementById("titulo-livro").value.toLowerCase();
+    const autorLivro = document.getElementById("autor-livro").value.toLowerCase();
+
+    if(livros.find(l => l.titulo === tituloLivro && l.autor === autorLivro)) {
+        alert("Livro já cadastrado");
+    } else {
+        livros.push({
+            titulo: tituloLivro,
+            autor: autorLivro
+        });
+        console.log(livros);
+    }
+
+    formLivro.reset();
+});
+
+
 //Funções dos botões do menu
 buttonCadastrarLivro.addEventListener("click", (e) => {
     e.preventDefault();
@@ -104,3 +124,6 @@ buttonListarLivros.addEventListener("click", (e) => {
 });
 
 buttonCadastrarLivro.click();
+
+
+
