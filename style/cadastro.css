@@ -28,6 +28,8 @@ input, select{
   justify-content: center;
   gap: 8px;
   margin: 5px 0 10px 0;
+  background-color: #4CAF50;
+  color: #FFF;
 }
 
 .forms section button:hover{
@@ -98,8 +100,38 @@ section{
 .menu .desativo:hover{
     background-color: #FFF;
     color: #000000;
+    cursor: pointer;
 }
 
-.hidden {
-    display: none;
+
+
+#lista-categorias, #lista-livros, #form-livro, #form-categoria {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#lista-categorias h2, #lista-livros h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#categorias-cadastradas p, #livros-cadastrados p {
+  background-color: #ffffff;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-left: 5px solid #4CAF50;
+  border-radius: 4px;
+  color: #444;
+  transition: background-color 0.3s;
+}
+
+#categorias-cadastradas p:hover,  #livros-cadastrados p:hover{
+  background-color: #f0f0f0;
+  cursor: pointer;
 }

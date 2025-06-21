@@ -25,6 +25,7 @@ formCategoria.addEventListener("submit", (e) => {
         alert("Categoria já existe");
     }else{
         categorias.push(nomeCategoria);
+        alert(`Categoria ${nomeCategoria} cadastrada com sucesso!`)
         console.log(categorias);
     }
 
@@ -100,10 +101,11 @@ buttonListarCategorias.addEventListener("click", () => {
     formCategoria.style.display = "none";
     listaLivros.style.display = "none";
 
-    listaCategorias.innerHTML = "";
-    listaCategorias.innerHTML += "<h2>Lista de Categorias</h2>"
+    const categoriasCadastradas = document.getElementById("categorias-cadastradas");
+
+    categoriasCadastradas.innerHTML = "";
     for (let index = 0; index < categorias.length; index++) {
-        listaCategorias.innerHTML += "<p>" + categorias[index] + "</p>"
+        categoriasCadastradas.innerHTML += "<p>" + categorias[index] + "</p>"
         
     }
 
