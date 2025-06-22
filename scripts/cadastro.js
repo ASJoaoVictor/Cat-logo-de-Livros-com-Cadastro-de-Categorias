@@ -140,7 +140,9 @@ buttonListarCategorias.addEventListener("click", () => {
 
     const categoriasCadastradas = document.getElementById("categorias-cadastradas");
 
+
     categoriasCadastradas.innerHTML = "";
+    categoriasCadastradas.innerHTML = "<h2>Lista de categorias</h2>";
     for (let index = 0; index < categorias.length; index++) {
         categoriasCadastradas.innerHTML += "<p>" + categorias[index] + "</p>"
         
