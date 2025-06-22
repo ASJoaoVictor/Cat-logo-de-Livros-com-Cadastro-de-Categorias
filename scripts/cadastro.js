@@ -55,8 +55,11 @@ document.getElementById("deletar-categoria").addEventListener("click", (e) => {
 
     if(categorias.find(c => c === nomeCategoria)){
         confirmacao = prompt("Digite o nome da categoria para confirmar: ")
-        if(nomeCategoria == confirmacao){
+        if(nomeCategoria === confirmacao){
             categorias.splice(categorias.indexOf(nomeCategoria), 1);
+        }else{
+            alert("Nome digitado errado");
+            buttonListarCategorias.click();
         }
     }else{
         alert("Categoria não encontrada");
