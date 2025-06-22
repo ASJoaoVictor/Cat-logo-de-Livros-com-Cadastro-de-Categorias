@@ -103,9 +103,7 @@ section{
     cursor: pointer;
 }
 
-
-
-#lista-categorias, #lista-livros, #form-livro, #form-categoria {
+#lista-categorias div, #lista-livros, #form-livro, #form-categoria {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
@@ -134,4 +132,8 @@ section{
 #categorias-cadastradas p:hover,  #livros-cadastrados p:hover{
   background-color: #f0f0f0;
   cursor: pointer;
+}
+
+#deletar-categoria{
+    background-color: #F44336;
 }

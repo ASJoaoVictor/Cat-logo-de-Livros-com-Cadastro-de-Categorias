@@ -16,6 +16,7 @@ const listaLivros = document.getElementById("lista-livros");
 
 const selectCategoriaLivro = document.getElementById("select-categoria-livro");
 
+//Cadastrar categoria
 formCategoria.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -30,6 +31,39 @@ formCategoria.addEventListener("submit", (e) => {
     }
 
     formCategoria.reset();
+});
+
+document.getElementById("alterar-categoria").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
+
+    if(categorias.find(c => c === nomeCategoria)){
+        categorias[categorias.indexOf(nomeCategoria)] = prompt("Novo nome para categoria: ");
+    }else{
+        alert("Categoria não encontrada");
+    }
+
+    document.getElementById("update-delete").reset();
+    buttonListarCategorias.click();
+});
+
+document.getElementById("deletar-categoria").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
+
+    if(categorias.find(c => c === nomeCategoria)){
+        confirmacao = prompt("Digite o nome da categoria para confirmar: ")
+        if(nomeCategoria == confirmacao){
+            categorias.splice(categorias.indexOf(nomeCategoria), 1);
+        }
+    }else{
+        alert("Categoria não encontrada");
+    }
+
+    document.getElementById("update-delete").reset();
+    buttonListarCategorias.click();
 });
 
 
