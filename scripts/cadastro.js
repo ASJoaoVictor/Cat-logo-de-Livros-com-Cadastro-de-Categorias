@@ -4,6 +4,89 @@ const categorias = [
     "ação"
 ];
 
+const livros = [
+    // Categoria: Romance
+    {
+        "titulo": "Orgulho e Preconceito",
+        "autor": "Jane Austen",
+        "categoria": "romance"
+    },
+    {
+        "titulo": "Cem Anos de Solidão",
+        "autor": "Gabriel García Márquez",
+        "categoria": "romance"
+    },
+    {
+        "titulo": "O Morro dos Ventos Uivantes",
+        "autor": "Emily Brontë",
+        "categoria": "romance"
+    },
+    {
+        "titulo": "Anna Kariênina",
+        "autor": "Lev Tolstói",
+        "categoria": "romance"
+    },
+    {
+        "titulo": "A Culpa é das Estrelas",
+        "autor": "John Green",
+        "categoria": "romance"
+    },
+
+    // Categoria: Aventura
+    {
+        "titulo": "A Ilha do Tesouro",
+        "autor": "Robert Louis Stevenson",
+        "categoria": "aventura"
+    },
+    {
+        "titulo": "As Aventuras de Tom Sawyer",
+        "autor": "Mark Twain",
+        "categoria": "aventura"
+    },
+    {
+        "titulo": "Viagem ao Centro da Terra",
+        "autor": "Jules Verne",
+        "categoria": "aventura"
+    },
+    {
+        "titulo": "O Hobbit",
+        "autor": "J.R.R. Tolkien",
+        "categoria": "aventura"
+    },
+    {
+        "titulo": "Robinson Crusoé",
+        "autor": "Daniel Defoe",
+        "categoria": "aventura"
+    },
+
+    // Categoria: Ação
+    {
+        "titulo": "O Código Da Vinci",
+        "autor": "Dan Brown",
+        "categoria": "ação"
+    },
+    {
+        "titulo": "Jogos Vorazes",
+        "autor": "Suzanne Collins",
+        "categoria": "ação"
+    },
+    {
+        "titulo": "O Último dos Moicanos",
+        "autor": "James Fenimore Cooper",
+        "categoria": "ação"
+    },
+    {
+        "titulo": "A Guerra dos Tronos",
+        "autor": "George R.R. Martin",
+        "categoria": "ação"
+    },
+    {
+        "titulo": "Divergente",
+        "autor": "Veronica Roth",
+        "categoria": "ação"
+    }
+];
+
 const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
 const buttonCadastrarCategoria = document.getElementById("button-cadastrar-categoria");
 const buttonListarCategorias = document.getElementById("button-listar-categorias")
@@ -16,6 +99,7 @@ const listaLivros = document.getElementById("lista-livros");
 
 const selectCategoriaLivro = document.getElementById("select-categoria-livro");
 
+//inicio ações das categorias
 //Cadastrar categoria
 formCategoria.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -33,6 +117,7 @@ formCategoria.addEventListener("submit", (e) => {
     formCategoria.reset();
 });
 
+//Alterar nome
 document.getElementById("alterar-categoria").addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -44,10 +129,11 @@ document.getElementById("alterar-categoria").addEventListener("click", (e) => {
         alert("Categoria não encontrada");
     }
 
-    document.getElementById("update-delete").reset();
+    document.getElementById("categoria-update-delete").reset();
     buttonListarCategorias.click();
 });
 
+//Delerar categoria
 document.getElementById("deletar-categoria").addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -65,29 +151,99 @@ document.getElementById("deletar-categoria").addEventListener("click", (e) => {
         alert("Categoria não encontrada");
     }
 
-    document.getElementById("update-delete").reset();
+    document.getElementById("categoria-update-delete").reset();
     buttonListarCategorias.click();
 });
+//Fim ações categorias
 
 
+//Inicio ações livros
+//cadastrar livro
 formLivro.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const tituloLivro = document.getElementById("titulo-livro").value.toLowerCase();
     const autorLivro = document.getElementById("autor-livro").value.toLowerCase();
+    const categoriaLivro = document.getElementById("select-categoria-livro").value.toLowerCase();
 
     if(livros.find(l => l.titulo === tituloLivro && l.autor === autorLivro)) {
         alert("Livro já cadastrado");
     } else {
         livros.push({
             titulo: tituloLivro,
-            autor: autorLivro
+            autor: autorLivro,
+            categoria: categoriaLivro
         });
+        alert("Livro cadatrado com sucesso!")
         console.log(livros);
     }
 
     formLivro.reset();
 });
+
+//deletar livro
+document.getElementById("deletar-livro").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
+
+    if(livros.find(l => l.titulo === nomeLivro)){
+        confirmacao = prompt("Digite o nome do livro para confirmar: ")
+        if(nomeLivro === confirmacao){
+            livros.splice(livros.findIndex(l => l.titulo === nomeLivro), 1);
+            console.log(livros);
+        }else{
+            alert("Nome digitado errado");
+            buttonListarCategorias.click();
+        }
+    }else{
+        alert("Livro não encontrada");
+    }
+
+    document.getElementById("livro-update-delete").reset();
+    buttonListarLivros.click();
+});
+
+//Editar livro
+document.getElementById("alterar-livro").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
+
+    if(livros.find(l => l.titulo === nomeLivro)){
+        document.getElementById("livro-update-delete").style.display = "none";
+        document.getElementById("form-editar-livro").style.display = "";
+
+        const selectEditarLivro = document.getElementById("select-editar-categoria-livro");
+
+        categorias.forEach(categoria => {
+            selectEditarLivro.innerHTML += "<option>"+ categoria +"</option>"
+        });
+    }else{
+        alert("Livro não encontrada");
+    }
+});
+document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
+    
+    const novoTitulo = document.getElementById("editar-titulo-livro").value;
+    const novoAutor = document.getElementById("editar-autor-livro").value;
+    const novoCategoria = document.getElementById("select-editar-categoria-livro").value;
+
+    let indexLivro = livros.findIndex(l => l.titulo == nomeLivro);
+
+    livros[indexLivro].titulo = novoTitulo;
+    livros[indexLivro].autor = novoAutor;
+    livros[indexLivro].categoria = novoCategoria;
+
+    alert("Livro atualizado");
+
+    document.getElementById("livro-update-delete").reset();
+    buttonListarLivros.click();
+
+});
+//Fim ações livros
 
 
 //Funções dos botões do menu
@@ -142,9 +298,8 @@ buttonListarCategorias.addEventListener("click", () => {
 
 
     categoriasCadastradas.innerHTML = "";
-    categoriasCadastradas.innerHTML = "<h2>Lista de categorias</h2>";
     for (let index = 0; index < categorias.length; index++) {
-        categoriasCadastradas.innerHTML += "<p>" + categorias[index] + "</p>"
+        categoriasCadastradas.innerHTML += "<tr><th>" + categorias[index] + "</th></tr>"
         
     }
 
@@ -162,6 +317,40 @@ buttonListarLivros.addEventListener("click", (e) => {
     listaCategorias.style.display = "none";
     formLivro.style.display = "none";
     formCategoria.style.display = "none";
+
+    document.getElementById("livro-update-delete").style.display = "";
+    document.getElementById("form-editar-livro").style.display = "none";
+
+    const filtroLivro = document.getElementById("select-filtro-livro");
+    const livrosCadastrados = document.getElementById("livros-cadastrados");
+
+    livrosCadastrados.innerHTML = "";
+    livrosCadastrados.innerHTML = "<h2>Lista de livros</h2>";
+    livrosCadastrados.innerHTML = "<tr><th>Título</th><th>Autor</th><th>Categoria</th></tr>";
+
+    if(filtroLivro.value == "Todos"){
+        for (let index = 0; index < livros.length; index++) {
+            livrosCadastrados.innerHTML += "<tr><th>"+ livros[index].titulo +"</th><th>"+ livros[index].autor +"</th><th>"+ livros[index].categoria +"</th></tr>";
+        }
+    }else{
+        for (let index = 0; index < livros.length; index++) {
+            if(livros[index].categoria == filtroLivro.value){
+                livrosCadastrados.innerHTML += "<tr><th>"+ livros[index].titulo +"</th><th>"+ livros[index].autor +"</th><th>"+ livros[index].categoria +"</th></tr>";
+            }
+        }
+    }
+
+    filtroLivro.innerHTML = "";
+    filtroLivro.innerHTML = "<option>Todos</option>";
+    categorias.forEach(categoria => {
+        filtroLivro.innerHTML += "<option>"+categoria+"</option>";
+    });
+
+
+});
+
+document.getElementById("button-filtro-livro").addEventListener("click", () => {
+    buttonListarLivros.click();
 });
 
 buttonCadastrarLivro.click();
