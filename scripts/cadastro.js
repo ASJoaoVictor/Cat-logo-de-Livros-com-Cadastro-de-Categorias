@@ -124,7 +124,12 @@ document.getElementById("alterar-categoria").addEventListener("click", (e) => {
     const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
 
     if(categorias.find(c => c === nomeCategoria)){
-        categorias[categorias.indexOf(nomeCategoria)] = prompt("Novo nome para categoria: ");
+        let novoNomeCategoria = prompt("Digite o novo nome para categoria: ");
+        if(novoNomeCategoria == null ||  novoNomeCategoria == ""){
+            alert("Nome inválido!")
+        }else{
+            categorias[categorias.indexOf(nomeCategoria)] = novoNomeCategoria;
+        }
     }else{
         alert("Categoria não encontrada");
     }
