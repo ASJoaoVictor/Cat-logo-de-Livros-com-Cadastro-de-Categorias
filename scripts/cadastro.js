@@ -87,6 +87,10 @@ const livros = [
     }
 ];
 
+if(!localStorage.getItem("user")){
+    window.location.href = "index.html";
+}
+
 const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
 const buttonCadastrarCategoria = document.getElementById("button-cadastrar-categoria");
 const buttonListarCategorias = document.getElementById("button-listar-categorias")

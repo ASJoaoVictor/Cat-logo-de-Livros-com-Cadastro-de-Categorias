@@ -33,3 +33,9 @@ button{
     cursor: pointer;    
 }
 
+input:focus{
+    background-color: rgb(231, 231, 231);
+    border-color: aqua;
+    outline-color: #ccc;
+}
+
