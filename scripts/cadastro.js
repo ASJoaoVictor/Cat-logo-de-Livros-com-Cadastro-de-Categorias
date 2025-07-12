@@ -87,9 +87,12 @@ const livros = [
     }
 ];
 
+//Validando de existe usuário logado
 if(!localStorage.getItem("user")){
     window.location.href = "index.html";
 }
+
+const regex = /^[a-z, A-Z]+$/;
 
 const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
 const buttonCadastrarCategoria = document.getElementById("button-cadastrar-categoria");
@@ -174,6 +177,15 @@ formLivro.addEventListener("submit", (e) => {
     const tituloLivro = document.getElementById("titulo-livro").value.toLowerCase();
     const autorLivro = document.getElementById("autor-livro").value.toLowerCase();
     const categoriaLivro = document.getElementById("select-categoria-livro").value.toLowerCase();
+
+    if(tituloLivro == ""){
+        alert("Título inválido!");
+        return;
+    }else if(!regex.test(autorLivro) || autorLivro == ""){
+        alert("Nome do autor inválido!");
+        return;
+    }
+
 
     if(livros.find(l => l.titulo === tituloLivro && l.autor === autorLivro)) {
         alert("Livro já cadastrado");
@@ -360,6 +372,27 @@ buttonListarLivros.addEventListener("click", (e) => {
 
 document.getElementById("button-filtro-livro").addEventListener("click", () => {
     buttonListarLivros.click();
+});
+
+document.getElementById("select-filtro-livro").addEventListener("input", () => {
+    buttonListarLivros.click();
+});
+
+//Validação de dados
+document.getElementById("autor-livro").addEventListener("input", function() {
+    if(regex.test(this.value)){
+        this.style.outlineColor = "rgb(0, 250, 0)";
+    }else{
+        this.style.outlineColor = "rgb(250, 0, 0)";
+    }
+});
+
+document.getElementById("nome-categoria").addEventListener("input", function() {
+    if(this.value == "" || !regex.test(this.value)){
+        this.style.outlineColor = "rgb(250, 0, 0)";
+    }else{
+        this.style.outlineColor = "rgb(0, 250, 0)";
+    }
 });
 
 buttonCadastrarLivro.click();

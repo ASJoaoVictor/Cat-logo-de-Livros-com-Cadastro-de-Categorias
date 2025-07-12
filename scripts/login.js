@@ -2,6 +2,8 @@ const users = [{"username": "admin", "password": "1234"}];
 
 const loginForm = document.getElementById("login-form");
 
+const regexUsername = /^[a-z]+$/;
+
 if(localStorage.getItem("user") && users.find(u => u.username == localStorage.getItem("user"))){
     window.location.href = "cadastro.html";
 }
@@ -15,7 +17,7 @@ loginForm.addEventListener("submit", (e) => {
     const password = document.getElementById("login-password").value.trim();
     const message = document.getElementById("message");
 
-    if(username == ""){
+    if(username == "" || !regexUsername.test(username)){
         alert("Usuário inválido!")
         return;
     }else if(password == ""){
@@ -47,11 +49,9 @@ document.getElementById("login-password").addEventListener("input", function() {
 });
 
 document.getElementById("login-username").addEventListener("input", function() {
-    const regex = /^[a-z]+$/;
 
-    if(regex.test(this.value)){
-        this.style.outlineColor = "green";
-        this.style.borderColor = "green";
+    if(regexUsername.test(this.value)){
+        this.style.outlineColor = "rgb(0, 250, 0)";
     }else{
         this.style.outlineColor = "red";
     }
