@@ -225,6 +225,26 @@ document.getElementById("deletar-livro").addEventListener("click", (e) => {
     buttonListarLivros.click();
 });
 
+function deletar_livro(nome_livro){
+    const nomeLivro = nome_livro;
+
+    if(livros.find(l => l.titulo === nomeLivro)){
+        //confirmacao = prompt("Digite o nome do livro para confirmar: ")
+        if(true){
+            livros.splice(livros.findIndex(l => l.titulo === nomeLivro), 1);
+            console.log(livros);
+        }else{
+            alert("Nome digitado errado");
+            buttonListarCategorias.click();
+        }
+    }else{
+        alert("Livro não encontrada");
+    }
+
+    document.getElementById("livro-update-delete").reset();
+    buttonListarLivros.click();
+}
+
 //Editar livro
 document.getElementById("alterar-livro").addEventListener("click", (e) => {
     e.preventDefault();
@@ -351,7 +371,14 @@ buttonListarLivros.addEventListener("click", (e) => {
 
     if(filtroLivro.value == "Todos"){
         for (let index = 0; index < livros.length; index++) {
-            livrosCadastrados.innerHTML += "<tr><th>"+ livros[index].titulo +"</th><th>"+ livros[index].autor +"</th><th>"+ livros[index].categoria +"</th></tr>";
+            livrosCadastrados.innerHTML += `
+                <tr>
+                    <th>" ${livros[index].titulo} "</th>
+                    <th>" ${livros[index].autor} "</th>
+                    <th>" ${livros[index].categoria} "</th> 
+                    <th><button>editar</button></th> 
+                    <th><button onclick="deletar_livro('${livros[index].titulo}')">Deletar</button></th> 
+                </tr>`;
         }
     }else{
         for (let index = 0; index < livros.length; index++) {
