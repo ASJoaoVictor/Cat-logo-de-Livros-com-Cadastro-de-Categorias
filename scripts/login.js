@@ -8,32 +8,43 @@ if(localStorage.getItem("user") && users.find(u => u.username == localStorage.ge
     window.location.href = "cadastro.html";
 }
 
+function logar(){
+    return new Promise((resolve, reject) => setTimeout(resolve, 1000));
+}
+
 
 //Função verificar o login do usuário
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
     const message = document.getElementById("message");
 
-    if(username == "" || !regexUsername.test(username)){
-        alert("Usuário inválido!")
-        return;
-    }else if(password == ""){
-        alert("Senha inváli!a")
-        return;
-    }
+    logar()
+        .then(() => {
+            const username = document.getElementById("login-username").value.trim();
+            const password = document.getElementById("login-password").value.trim();
 
-    if(users.find(u => u.username == username && u.password == password)){
-        localStorage.setItem("user", username);
-        window.location.href = "cadastro.html";
-    }else{
+            if(username == "" || !regexUsername.test(username)){
+                throw new Error("Usuário inválido");
+                
+            }else if(password == ""){
+                throw new Error("Senha inválida!");
+            }
+
+            if(users.find(u => u.username == username && u.password == password)){
+                //localStorage.setItem("user", username);
+                window.location.href = "cadastro.html";
+            }else{
+                throw new Error("Usuário ou senha incorretos!");
+            }
+
+    })
+    .catch(err => {
         message.style.color = "red";
-        message.innerText = "Usuário ou senha incorretos!"
-    }
+        message.innerText = err.message;
+    })
+    .finally(() => loginForm.reset());
 
-    loginForm.reset();
+
 });
 
 document.getElementById("login-password").addEventListener("input", function() {
