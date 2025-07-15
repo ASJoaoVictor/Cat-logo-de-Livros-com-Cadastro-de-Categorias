@@ -31,7 +31,7 @@ loginForm.addEventListener("submit", (e) => {
             }
 
             if(users.find(u => u.username == username && u.password == password)){
-                //localStorage.setItem("user", username);
+                localStorage.setItem("user", username);
                 window.location.href = "cadastro.html";
             }else{
                 throw new Error("Usuário ou senha incorretos!");

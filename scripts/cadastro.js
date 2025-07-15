@@ -246,6 +246,7 @@ function deletar_livro(nome_livro){
 }
 
 //Editar livro
+var nomeLivroEdit;
 document.getElementById("alterar-livro").addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -266,7 +267,7 @@ document.getElementById("alterar-livro").addEventListener("click", (e) => {
 });
 document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
     e.preventDefault();
-    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
+    const nomeLivro = nomeLivroEdit;
     
     const novoTitulo = document.getElementById("editar-titulo-livro").value;
     const novoAutor = document.getElementById("editar-autor-livro").value;
@@ -284,6 +285,19 @@ document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
     buttonListarLivros.click();
 
 });
+
+function editar_livro(nome_livro){
+    nomeLivroEdit = nome_livro;
+    document.getElementById("livro-update-delete").style.display = "none";
+    document.getElementById("form-editar-livro").style.display = "";
+
+    const selectEditarLivro = document.getElementById("select-editar-categoria-livro");
+
+    categorias.forEach(categoria => {
+        selectEditarLivro.innerHTML += "<option>"+ categoria +"</option>"
+    });
+
+}
 //Fim ações livros
 
 
@@ -376,7 +390,7 @@ buttonListarLivros.addEventListener("click", (e) => {
                     <th>" ${livros[index].titulo} "</th>
                     <th>" ${livros[index].autor} "</th>
                     <th>" ${livros[index].categoria} "</th> 
-                    <th><button>editar</button></th> 
+                    <th><button onclick="editar_livro('${livros[index].titulo}')">Editar</button></th> 
                     <th><button onclick="deletar_livro('${livros[index].titulo}')">Deletar</button></th> 
                 </tr>`;
         }
