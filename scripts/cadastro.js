@@ -1,10 +1,10 @@
-const categorias = [
+var categorias = [
     "romance",
     "aventura",
     "ação"
 ];
 
-const livros = [
+var livros = [
     // Categoria: Romance
     {
         "titulo": "Orgulho e Preconceito",
@@ -87,12 +87,14 @@ const livros = [
     }
 ];
 
+checkLocalStorage();
+
 //Validando de existe usuário logado
 if(!localStorage.getItem("user")){
     window.location.href = "index.html";
 }
 
-const regex = /^[a-z, A-Z]+$/;
+const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 
 const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
 const buttonCadastrarCategoria = document.getElementById("button-cadastrar-categoria");
@@ -106,6 +108,16 @@ const listaLivros = document.getElementById("lista-livros");
 
 const selectCategoriaLivro = document.getElementById("select-categoria-livro");
 
+function checkLocalStorage(){
+    if(localStorage.getItem("livros")){
+        livros = JSON.parse(localStorage.getItem("livros"));
+    }
+
+    if(localStorage.getItem("categorias")){
+        categorias = JSON.parse(localStorage.getItem("categorias"));
+    }
+}
+
 //inicio ações das categorias
 //Cadastrar categoria
 formCategoria.addEventListener("submit", (e) => {
@@ -117,14 +129,15 @@ formCategoria.addEventListener("submit", (e) => {
         alert("Categoria já existe");
     }else{
         categorias.push(nomeCategoria);
-        alert(`Categoria ${nomeCategoria} cadastrada com sucesso!`)
+        alert(`Categoria ${nomeCategoria} cadastrada com sucesso!`);
+        localStorage.setItem("categorias", JSON.stringify(categorias));
         console.log(categorias);
     }
 
     formCategoria.reset();
 });
 
-//Alterar nome
+//Alterar nome categoria
 document.getElementById("alterar-categoria").addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -195,6 +208,7 @@ formLivro.addEventListener("submit", (e) => {
             autor: autorLivro,
             categoria: categoriaLivro
         });
+        localStorage.setItem("livros", JSON.stringify(livros));
         alert("Livro cadatrado com sucesso!")
         console.log(livros);
     }
@@ -203,68 +217,23 @@ formLivro.addEventListener("submit", (e) => {
 });
 
 //deletar livro
-document.getElementById("deletar-livro").addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
-
-    if(livros.find(l => l.titulo === nomeLivro)){
-        confirmacao = prompt("Digite o nome do livro para confirmar: ")
-        if(nomeLivro === confirmacao){
-            livros.splice(livros.findIndex(l => l.titulo === nomeLivro), 1);
-            console.log(livros);
-        }else{
-            alert("Nome digitado errado");
-            buttonListarCategorias.click();
-        }
-    }else{
-        alert("Livro não encontrada");
-    }
-
-    document.getElementById("livro-update-delete").reset();
-    buttonListarLivros.click();
-});
-
 function deletar_livro(nome_livro){
     const nomeLivro = nome_livro;
 
     if(livros.find(l => l.titulo === nomeLivro)){
-        //confirmacao = prompt("Digite o nome do livro para confirmar: ")
-        if(true){
-            livros.splice(livros.findIndex(l => l.titulo === nomeLivro), 1);
-            console.log(livros);
-        }else{
-            alert("Nome digitado errado");
-            buttonListarCategorias.click();
-        }
+        livros.splice(livros.findIndex(l => l.titulo === nomeLivro), 1);
+        localStorage.setItem("livros", JSON.stringify(livros));
+        console.log(livros);
     }else{
         alert("Livro não encontrada");
     }
 
-    document.getElementById("livro-update-delete").reset();
     buttonListarLivros.click();
 }
 
 //Editar livro
 var nomeLivroEdit;
-document.getElementById("alterar-livro").addEventListener("click", (e) => {
-    e.preventDefault();
 
-    const nomeLivro = document.getElementById("nome-livro-alt-del").value;
-
-    if(livros.find(l => l.titulo === nomeLivro)){
-        document.getElementById("livro-update-delete").style.display = "none";
-        document.getElementById("form-editar-livro").style.display = "";
-
-        const selectEditarLivro = document.getElementById("select-editar-categoria-livro");
-
-        categorias.forEach(categoria => {
-            selectEditarLivro.innerHTML += "<option>"+ categoria +"</option>"
-        });
-    }else{
-        alert("Livro não encontrada");
-    }
-});
 document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
     e.preventDefault();
     const nomeLivro = nomeLivroEdit;
@@ -273,26 +242,31 @@ document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
     const novoAutor = document.getElementById("editar-autor-livro").value;
     const novoCategoria = document.getElementById("select-editar-categoria-livro").value;
 
-    let indexLivro = livros.findIndex(l => l.titulo == nomeLivro);
+    if(livros.find(l => l.titulo === nomeLivro)){
+        let indexLivro = livros.findIndex(l => l.titulo == nomeLivro);
+    
+        livros[indexLivro].titulo = novoTitulo;
+        livros[indexLivro].autor = novoAutor;
+        livros[indexLivro].categoria = novoCategoria;
+    
+        localStorage.setItem("livros", JSON.stringify(livros));
 
-    livros[indexLivro].titulo = novoTitulo;
-    livros[indexLivro].autor = novoAutor;
-    livros[indexLivro].categoria = novoCategoria;
+        alert("Livro atualizado");
+    }
 
-    alert("Livro atualizado");
-
-    document.getElementById("livro-update-delete").reset();
+    document.getElementById("form-editar-livro").reset();
     buttonListarLivros.click();
 
 });
 
 function editar_livro(nome_livro){
     nomeLivroEdit = nome_livro;
-    document.getElementById("livro-update-delete").style.display = "none";
+
     document.getElementById("form-editar-livro").style.display = "";
 
     const selectEditarLivro = document.getElementById("select-editar-categoria-livro");
 
+    selectEditarLivro.innerHTML = "";
     categorias.forEach(categoria => {
         selectEditarLivro.innerHTML += "<option>"+ categoria +"</option>"
     });
@@ -304,6 +278,8 @@ function editar_livro(nome_livro){
 //Funções dos botões do menu
 buttonCadastrarLivro.addEventListener("click", (e) => {
     e.preventDefault();
+
+    checkLocalStorage();
 
     buttonCadastrarLivro.classList = "ativo";
     buttonCadastrarCategoria.classList =  "desativo";
@@ -363,6 +339,8 @@ buttonListarCategorias.addEventListener("click", () => {
 buttonListarLivros.addEventListener("click", (e) => {
     e.preventDefault();
 
+    checkLocalStorage();
+
     buttonListarLivros.classList = "ativo";
     buttonListarCategorias.classList = "desativo";
     buttonCadastrarLivro.classList = "desativo";
@@ -373,7 +351,6 @@ buttonListarLivros.addEventListener("click", (e) => {
     formLivro.style.display = "none";
     formCategoria.style.display = "none";
 
-    document.getElementById("livro-update-delete").style.display = "";
     document.getElementById("form-editar-livro").style.display = "none";
 
     const filtroLivro = document.getElementById("select-filtro-livro");
@@ -387,17 +364,24 @@ buttonListarLivros.addEventListener("click", (e) => {
         for (let index = 0; index < livros.length; index++) {
             livrosCadastrados.innerHTML += `
                 <tr>
-                    <th>" ${livros[index].titulo} "</th>
-                    <th>" ${livros[index].autor} "</th>
-                    <th>" ${livros[index].categoria} "</th> 
-                    <th><button onclick="editar_livro('${livros[index].titulo}')">Editar</button></th> 
-                    <th><button onclick="deletar_livro('${livros[index].titulo}')">Deletar</button></th> 
+                    <th> ${livros[index].titulo} </th>
+                    <th> ${livros[index].autor} </th>
+                    <th> ${livros[index].categoria} </th> 
+                    <th><button onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
+                    <th><button onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
                 </tr>`;
         }
     }else{
         for (let index = 0; index < livros.length; index++) {
             if(livros[index].categoria == filtroLivro.value){
-                livrosCadastrados.innerHTML += "<tr><th>"+ livros[index].titulo +"</th><th>"+ livros[index].autor +"</th><th>"+ livros[index].categoria +"</th></tr>";
+            livrosCadastrados.innerHTML += `
+                <tr>
+                    <th> ${livros[index].titulo}</th>
+                    <th> ${livros[index].autor} </th>
+                    <th> ${livros[index].categoria} </th> 
+                    <th><button onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
+                    <th><button onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
+                </tr>`;
             }
         }
     }
@@ -412,10 +396,6 @@ buttonListarLivros.addEventListener("click", (e) => {
 });
 
 document.getElementById("button-filtro-livro").addEventListener("click", () => {
-    buttonListarLivros.click();
-});
-
-document.getElementById("select-filtro-livro").addEventListener("input", () => {
     buttonListarLivros.click();
 });
 
