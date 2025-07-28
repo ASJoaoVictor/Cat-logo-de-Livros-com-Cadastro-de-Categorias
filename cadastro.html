@@ -15,6 +15,7 @@
     <button id="button-cadastrar-categoria" class="desativo">Cadastrar Categoria</button>
     <button id="button-listar-livros" class="desativo">Listar livros</button>
     <button id="button-listar-categorias" class="desativo">Listar categorias</button>
+    <div id="temp" style="color: #fff"; font-size: 20px></div>
   </div>
 
   <div class="forms">
@@ -51,7 +52,7 @@
         </table>  <!-- Container para os livros -->
 
         <form id="form-editar-livro" style="display: none">  <!-- Removi o action e o onclick do button -->
-          <h2>Editar Livro</h2>
+          <h2>Editar Livro <button id="close-form-editar-livro" style="background-color: #F44336;">X</button></h2>
           <input id="editar-titulo-livro" placeholder="Título do Livro" required><br>  <!-- Mudei o ID e adicionei required -->
           <input id="editar-autor-livro" placeholder="Autor do Livro" required><br>  <!-- Adicionei campo autor -->
           <select id="select-editar-categoria-livro">  <!-- Mudei o ID -->
@@ -65,14 +66,6 @@
       <div id="lista-categorias" style="display:none;">
         <h2>Lista de categorias</h2>
         <table id="categorias-cadastradas"></table>  <!-- Container para categorias -->
-        <div>
-          <form id="categoria-update-delete">
-            <h2>Alterar ou deletar</h2>
-            <input type="text" placeholder="Nome da categoria" id="nome-categoria-alt-del"><br>
-            <button id="alterar-categoria">Alterar</button>
-            <button id="deletar-categoria">Deletar</button>
-          </form>
-        </div>
       </div>
     </section>
   </div>

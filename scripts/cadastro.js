@@ -94,6 +94,13 @@ if(!localStorage.getItem("user")){
     window.location.href = "index.html";
 }
 
+coods =  [-6.4836, -36.1536]
+apikey = "80bd2baeac71821f3635d5a5a1fe855c"
+fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coods[0]}&lon=${coods[1]}&units=metric&appid=${apikey}&lang=pt_br`)
+    .then(res => res.json())
+    .then(dados => document.getElementById("temp").innerHTML = `<p>Cidade: ${dados.name}</p> <p>Temp: ${dados.main.temp}°C</p> <p> Clima: ${dados.weather[0].description}</p`)
+    .catch(err => console.log(err))
+
 const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 
 const buttonCadastrarLivro = document.getElementById("button-cadastrar-livro");
@@ -138,10 +145,7 @@ formCategoria.addEventListener("submit", (e) => {
 });
 
 //Alterar nome categoria
-document.getElementById("alterar-categoria").addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
+function editar_categoria(nomeCategoria){
 
     if(categorias.find(c => c === nomeCategoria)){
         let novoNomeCategoria = prompt("Digite o novo nome para categoria: ");
@@ -149,25 +153,25 @@ document.getElementById("alterar-categoria").addEventListener("click", (e) => {
             alert("Nome inválido!")
         }else{
             categorias[categorias.indexOf(nomeCategoria)] = novoNomeCategoria;
+            localStorage.setItem("categorias", JSON.stringify(categorias));
         }
     }else{
         alert("Categoria não encontrada");
     }
 
-    document.getElementById("categoria-update-delete").reset();
-    buttonListarCategorias.click();
-});
+    buttonListarCategorias.click(); 
+}
+
 
 //Delerar categoria
-document.getElementById("deletar-categoria").addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
+function deletar_categoria(nomeCategoria){
+    //const nomeCategoria = document.getElementById("nome-categoria-alt-del").value;
 
     if(categorias.find(c => c === nomeCategoria)){
         confirmacao = prompt("Digite o nome da categoria para confirmar: ")
         if(nomeCategoria === confirmacao){
             categorias.splice(categorias.indexOf(nomeCategoria), 1);
+            localStorage.setItem("categorias", JSON.stringify(categorias));
         }else{
             alert("Nome digitado errado");
             buttonListarCategorias.click();
@@ -176,9 +180,8 @@ document.getElementById("deletar-categoria").addEventListener("click", (e) => {
         alert("Categoria não encontrada");
     }
 
-    document.getElementById("categoria-update-delete").reset();
     buttonListarCategorias.click();
-});
+}
 //Fim ações categorias
 
 
@@ -242,6 +245,11 @@ document.getElementById("form-editar-livro").addEventListener("submit", (e) => {
     const novoAutor = document.getElementById("editar-autor-livro").value;
     const novoCategoria = document.getElementById("select-editar-categoria-livro").value;
 
+    if(!regex.test(novoAutor) || novoAutor == "" || novoTitulo == ""){
+        alert("nome do autor ou título inválido");
+        return
+    }
+
     if(livros.find(l => l.titulo === nomeLivro)){
         let indexLivro = livros.findIndex(l => l.titulo == nomeLivro);
     
@@ -302,6 +310,8 @@ buttonCadastrarLivro.addEventListener("click", (e) => {
 buttonCadastrarCategoria.addEventListener("click", (e) => {
     e.preventDefault();
 
+    checkLocalStorage();
+
     buttonCadastrarCategoria.classList =  "ativo";
     buttonCadastrarLivro.classList = "desativo";
     buttonListarCategorias.classList = "desativo";
@@ -330,7 +340,20 @@ buttonListarCategorias.addEventListener("click", () => {
 
     categoriasCadastradas.innerHTML = "";
     for (let index = 0; index < categorias.length; index++) {
-        categoriasCadastradas.innerHTML += "<tr><th>" + categorias[index] + "</th></tr>"
+        categoriasCadastradas.innerHTML += `
+            <tr>
+                <th> ${categorias[index]} </th>
+                <th class="th_button">
+                    <button class="button_edit" onclick="editar_categoria('${categorias[index]}')">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </th>
+                <th class="th_button">
+                    <button class="button_del" onclick="deletar_categoria('${categorias[index]}')">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </th>
+            </tr>`
         
     }
 
@@ -367,8 +390,8 @@ buttonListarLivros.addEventListener("click", (e) => {
                     <th> ${livros[index].titulo} </th>
                     <th> ${livros[index].autor} </th>
                     <th> ${livros[index].categoria} </th> 
-                    <th><button onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
-                    <th><button onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
+                    <th class="th_button"><button class="button_edit" onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
+                    <th class="th_button"><button class="button_del" onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
                 </tr>`;
         }
     }else{
@@ -379,8 +402,8 @@ buttonListarLivros.addEventListener("click", (e) => {
                     <th> ${livros[index].titulo}</th>
                     <th> ${livros[index].autor} </th>
                     <th> ${livros[index].categoria} </th> 
-                    <th><button onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
-                    <th><button onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
+                    <th class="th_button" ><button class="button_edit" onclick="editar_livro('${livros[index].titulo}')"><i class="fa-solid fa-pen-to-square"></i></button></th> 
+                    <th class="th_button"><button class="button_del" onclick="deletar_livro('${livros[index].titulo}')"><i class="fa-solid fa-delete-left"></i></button></th> 
                 </tr>`;
             }
         }
@@ -414,6 +437,10 @@ document.getElementById("nome-categoria").addEventListener("input", function() {
     }else{
         this.style.outlineColor = "rgb(0, 250, 0)";
     }
+});
+
+document.getElementById("close-form-editar-livro").addEventListener("click", () => {
+    document.getElementById("form-editar-livro").style.display = "none";
 });
 
 buttonCadastrarLivro.click();

@@ -151,7 +151,7 @@ section{
 th, td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
 }
 
 /* Estilo para as cabeçalhos */
@@ -173,4 +173,16 @@ th {
 }
 i{
   scale: 1.3;
+}
+
+.th_button{
+  background-color: transparent;
+}
+
+th button.button_del{
+  background-color: #F44336;
+}
+
+th button.button_edit{
+  background-color: #ffc107;
 }
