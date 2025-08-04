@@ -94,12 +94,25 @@ if(!localStorage.getItem("user")){
     window.location.href = "index.html";
 }
 
-coods =  [-6.4836, -36.1536]
-apikey = "80bd2baeac71821f3635d5a5a1fe855c"
+coods =  [-6.4836, -36.1536];
+apikey = "80bd2baeac71821f3635d5a5a1fe855c";
 fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coods[0]}&lon=${coods[1]}&units=metric&appid=${apikey}&lang=pt_br`)
-    .then(res => res.json())
+    .then(res => {
+        if(!res.ok) throw new Error(res.status);
+        return res.json();
+    })
     .then(dados => document.getElementById("temp").innerHTML = `<p>Cidade: ${dados.name}</p> <p>Temp: ${dados.main.temp}°C</p> <p> Clima: ${dados.weather[0].description}</p`)
-    .catch(err => console.log(err))
+    .catch(err => {
+        //Acesso não autorizado
+        if(err.message == 401){
+            document.getElementById("temp").innerHTML = "Sem <br> conexão";
+        }else if(err.message == 404 || err.message == 400){//Não encontrado
+            document.getElementById("temp").innerHTML = "Cidade não <br> encontrada";
+        }else if(err.message >= 500 && err.message <= 599){//Problema no servidor
+            document.getElementById("temp").innerHTML = "Sem <br> serviço";
+        }
+
+    });
 
 const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 
@@ -441,6 +454,12 @@ document.getElementById("nome-categoria").addEventListener("input", function() {
 
 document.getElementById("close-form-editar-livro").addEventListener("click", () => {
     document.getElementById("form-editar-livro").style.display = "none";
+});
+
+//logoff
+document.getElementById("logoff").addEventListener("click", () =>{
+    localStorage.removeItem("user");
+    location.reload();
 });
 
 buttonCadastrarLivro.click();
