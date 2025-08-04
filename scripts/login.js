@@ -1,4 +1,4 @@
-const users = [{"username": "admin", "password": "1234"}];
+const users = [{"username": "admin", "password": "12345"}];
 
 const loginForm = document.getElementById("login-form");
 
